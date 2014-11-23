@@ -14,14 +14,12 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeExit()
 	return result;
 }
 
-PLUGIN_EXPORT bool PLUGIN_CALL OnFilterScriptInit()
-{
-	return samphp::instance->callBool("OnFilterScriptInit");
+PLUGIN_EXPORT bool PLUGIN_CALL OnHTTPResponse(int index, int response_code, const char *data) {
+	return samphp::instance->callBool("OnHTTPResponse", "lls", index, response_code, data);
 }
 
-PLUGIN_EXPORT bool PLUGIN_CALL OnFilterScriptExit()
-{
-	return samphp::instance->callBool("OnFilterScriptExit");
+PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ) {
+	return samphp::instance->callBool("OnPlayerWeaponShot", "llllddd", playerid, weaponid, hittype, hitid, fX, fY, fZ);
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)

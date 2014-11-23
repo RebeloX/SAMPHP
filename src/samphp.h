@@ -17,7 +17,7 @@
 
 #define SUCCESS 0
 #define FAIL 1
-#define SAMPHPVERSION	"2.0.1"
+#define SAMPHPVERSION	"2.0.2"
 
 typedef unsigned int php_ret;
 
@@ -58,13 +58,3 @@ int php_set_ini_entry(char *entry, char *value, int stage);
 
 // Created by: https://github.com/Zeex/sampgdk/blob/master/plugins/unlimitedfs/unlimitedfs.cpp
 std::string GetServerCfgOption(const std::string &option);
-/*
-void samphp_init();
-void samphp_shutdown();
-
-void samphp_execute(char *filename);
-
-int samphp_output_handler(const char *str, unsigned int str_length TSRMLS_DC);
-
-
-*/
