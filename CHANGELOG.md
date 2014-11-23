@@ -2,6 +2,7 @@ Changelog
 =========
 2014/11/23:
 - BUG FIX #4 - Missing callbacks in the definitions export file.
+- BUG FIX #5 - Missing callbacks OnHTTPResponse(useless, IKR) and OnPlayerWeaponShot
 
 2014/11/22:
 - Added, again, RegisterAMXNative, CallAMXNative and AMXNativeExists
