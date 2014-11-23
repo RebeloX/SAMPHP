@@ -337,7 +337,7 @@ class Player
 
 	public function setShopName($name)
 	{
-		return StopAudioStreamForPlayer($this->id, $name);
+		return SetPlayerShopName($this->id, $name);
 	}
 
 	public function setSkillLevel($skill, $level)
