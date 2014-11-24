@@ -35,7 +35,7 @@ class PlayerCamera
 
 	public function setBehindPlayer()
 	{
-		return SetPlayerCameraBehindPlayer($this->id);
+		return SetCameraBehindPlayer($this->id);
 	}
 
 	public function getFrontVector()
