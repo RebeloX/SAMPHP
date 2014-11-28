@@ -9,7 +9,7 @@ trait Storage
 		return $this->__data[$key] = $value;
 	}
 
-	public function __get($key)
+	public function &__get($key)
 	{
 		return $this->__data[$key];
 	}
