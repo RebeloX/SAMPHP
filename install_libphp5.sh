@@ -49,5 +49,4 @@ make install
 #register module
 ldconfig
 
-echo Finished.
 exit 0
