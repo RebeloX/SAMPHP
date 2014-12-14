@@ -92,17 +92,18 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>D:\sampgdk\include;D:\phpsrc\php-5.6.3-src;D:\phpsrc\php-5.6.3-src\Zend;D:\phpsrc\php-5.6.3-src\win32;D:\phpsrc\php-5.6.3-src\TSRM;D:\phpsrc\php-5.6.3-src\sapi;D:\phpsrc\php-5.6.3-src\main;D:\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_RELEASE;_WINDOWS;_USRDLL;ZEND_WIN32_FORCE_INLINE;ZEND_DEBUG=0;ZEND_WIN32;PHP_WIN32;_USE_32BIT_TIME_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\phpsrc\php-5.6.3-src;D:\phpsrc\php-5.6.3-src\Zend;D:\phpsrc\php-5.6.3-src\win32;D:\phpsrc\php-5.6.3-src\TSRM;D:\phpsrc\php-5.6.3-src\sapi;D:\phpsrc\php-5.6.3-src\main;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SAMPHP_EXPORTS;WIN32;_RELEASE;_WINDOWS;_USRDLL;NDEBUG;ZEND_WIN32_FORCE_INLINE;ZEND_DEBUG=0;ZEND_WIN32;PHP_WIN32;_USE_32BIT_TIME_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sampgdk4.lib;php5embed.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\sampgdk\lib;D:\phpsrc\php-5.6.3-src\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>php5embed.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\phpsrc\php-5.6.3-src\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>samphp.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -136,12 +137,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\amxplugin.cpp" />
     <ClCompile Include="..\..\src\bindings.cpp" />
-    <ClCompile Include="..\..\src\fakeamx\amx.c" />
-    <ClCompile Include="..\..\src\fakeamx\array.c" />
-    <ClCompile Include="..\..\src\fakeamx\fakeamx.c" />
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\sampgdk\amxplugin.cpp" />
+    <ClCompile Include="..\..\src\sampgdk\sampgdk.c" />
     <ClCompile Include="..\..\src\samphp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,13 +152,17 @@
     <ClInclude Include="..\..\src\bindings_samphp.hpp" />
     <ClInclude Include="..\..\src\bindings_util.hpp" />
     <ClInclude Include="..\..\src\bindings_vehicles.hpp" />
-    <ClInclude Include="..\..\src\fakeamx\amx.h" />
-    <ClInclude Include="..\..\src\fakeamx\array.h" />
     <ClInclude Include="..\..\src\fakeamx\fakeamx.h" />
-    <ClInclude Include="..\..\src\fakeamx\init.h" />
+    <ClInclude Include="..\..\src\sampgdk\amx\amx.h" />
+    <ClInclude Include="..\..\src\sampgdk\amx\sclinux.h" />
+    <ClInclude Include="..\..\src\sampgdk\plugincommon.h" />
+    <ClInclude Include="..\..\src\sampgdk\sampgdk.h" />
     <ClInclude Include="..\..\src\samphp.h" />
     <ClInclude Include="..\..\src\samphp_consts.hpp" />
     <ClInclude Include="..\..\src\undef.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="samphp.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

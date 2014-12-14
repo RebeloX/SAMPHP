@@ -1,26 +1,24 @@
+#define SAMPGDK_AMALGAMATION
 #pragma once
 
 #pragma warning(disable: 4244)
 #pragma warning(disable: 4800)
 #pragma warning(disable: 4355)
 
-#include <sampgdk/a_players.h>
-#include <sampgdk/a_samp.h>
-#include <sampgdk/a_vehicles.h>
-#include <sampgdk/a_objects.h>
-#include <sampgdk/core.h>
-#include <sampgdk/sdk.h>
-#include <sampgdk/version.h>
-#include <sampgdk/interop.h>
+#include <vector>
+#include "sampgdk/sampgdk.h"
 #include "fakeamx/fakeamx.h"
 
 
-#define SUCCESS 0
-#define FAIL 1
-#define SAMPHPVERSION	"2.0.2"
+#define SUCCESS			0
+#define FAIL			1
+#define SAMPHPVERSION	"2.0.3"
+#define MAJOR			"2"
+#define MINOR			"0"
+#define REVISION		"3"
 
 typedef unsigned int php_ret;
-
+//----
 class samphp
 {
 public:
@@ -31,7 +29,6 @@ public:
     static samphp* init();
     static void unload();
 	
-
 	//START taken from facebook/phpembed. Take a look at their license: https://github.com/facebook/phpembed/blob/master/LICENSE
 	bool callBool(char *fn, char *argspec = "", ...);
 	zval *call(char *fn, char *argspec, va_list ap TSRMLS_DC);

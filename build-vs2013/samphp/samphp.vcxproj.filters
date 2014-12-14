@@ -13,8 +13,14 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Header files\fakeamx">
-      <UniqueIdentifier>{bbfcf5c4-6361-4ec0-9f09-455119f49103}</UniqueIdentifier>
+    <Filter Include="Header files\sampgdk">
+      <UniqueIdentifier>{e13a1f48-283a-43ac-94fa-2b5f9de4fc7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header files\sampgdk\amx">
+      <UniqueIdentifier>{450e964f-4b28-43cc-b0d6-c9a37242e547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\sampgdk">
+      <UniqueIdentifier>{8cd74363-2a19-47d5-829d-d90408107bb9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -27,17 +33,11 @@
     <ClCompile Include="..\..\src\samphp.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\amxplugin.cpp">
-      <Filter>Source files</Filter>
+    <ClCompile Include="..\..\src\sampgdk\amxplugin.cpp">
+      <Filter>Source files\sampgdk</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\fakeamx\amx.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fakeamx\array.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\fakeamx\fakeamx.c">
-      <Filter>Source files</Filter>
+    <ClCompile Include="..\..\src\sampgdk\sampgdk.c">
+      <Filter>Source files\sampgdk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,23 +68,31 @@
     <ClInclude Include="..\..\src\samphp.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\fakeamx\amx.h">
-      <Filter>Header files\fakeamx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\fakeamx\array.h">
-      <Filter>Header files\fakeamx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\fakeamx\fakeamx.h">
-      <Filter>Header files\fakeamx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\fakeamx\init.h">
-      <Filter>Header files\fakeamx</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\bindings_samphp.hpp">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\undef.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\sampgdk\plugincommon.h">
+      <Filter>Header files\sampgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sampgdk\sampgdk.h">
+      <Filter>Header files\sampgdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sampgdk\amx\amx.h">
+      <Filter>Header files\sampgdk\amx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\sampgdk\amx\sclinux.h">
+      <Filter>Header files\sampgdk\amx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\fakeamx\fakeamx.h">
+      <Filter>Header files\sampgdk</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="samphp.def">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

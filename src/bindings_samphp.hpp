@@ -97,7 +97,7 @@ PHP_FUNCTION(CallAMXNative)
 		}
 	}
 	//Call function
-	cell retval = native(amx, params);
+	cell retval = sampgdk::CallNative(native, params);
 	
 	// Clean up and reference hydration
 	for(int i = 0; i < num_descriptors; i++)

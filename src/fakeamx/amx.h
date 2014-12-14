@@ -16,7 +16,7 @@
 #ifndef SAMPGDK_INTERNAL_AMX_H
 #define SAMPGDK_INTERNAL_AMX_H
 
-#include <sampgdk/sdk.h>
+#include "../sampgdk/sampgdk.h"
 
 struct sampgdk_amx_api {
   uint16_t *(AMXAPI *Align16)(uint16_t *v);

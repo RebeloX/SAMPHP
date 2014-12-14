@@ -100,12 +100,6 @@ struct TimerParams {
 	char* functionName;
 };
 
-struct TimerExParams {
-	zval* callable;
-	char* functionName;
-	zval* arguments;
-};
-
 static void SAMPGDK_CALL executeTimedCallback(int timerId, void *voidParams)
 {
 	TimerParams *params = (TimerParams *) voidParams;

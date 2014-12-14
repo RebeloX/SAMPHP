@@ -1,4 +1,5 @@
 set -e
+
 SRCDIR=${HOME}/php5.6.3-source
 DISTDIR=${HOME}/dist
 rm -rf $SRCDIR
@@ -23,7 +24,7 @@ then
 fi
 
 
-echo ---------- Unpacking downloaded archives. This process may take several minutes! ----------
+echo Unpacking downloaded archives. This process may take several minutes...
 
 cd ${SRCDIR}
 
@@ -35,7 +36,7 @@ echo Done.
 
 #PHP 5
 echo ###################
-echo Compile PHP
+echo Compiling PHP
 echo ###################
 cd ${SRCDIR}/${PHP5}
 export CXXFLAGS="-m32"
@@ -48,4 +49,5 @@ make install
 #register module
 ldconfig
 
+echo Finished.
 exit 0

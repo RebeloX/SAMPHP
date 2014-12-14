@@ -242,7 +242,7 @@
     #undef RemovePlayerAttachedObject
     #undef IsPlayerAttachedObjectSlotUsed
     #undef EditAttachedObject
-//    #undef CreateExplosionForPlayer
+	#undef CreateExplosionForPlayer
     #undef SendDeathMessageToPlayer
     #undef NetStats_BytesReceived
     #undef NetStats_BytesSent

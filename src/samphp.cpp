@@ -35,16 +35,17 @@ samphp::samphp(bool typeError)
 	char directory[FILENAME_MAX];
 	GetCurrentDir(directory, sizeof(directory));
 	#ifdef ZEND_WIN32
-		std::strcat(directory, "\\php\\ext");
+		strcat(directory, "\\php\\ext");
 	#else
-		std::strcat(directory, "/php/ext");
+		strcat(directory, "/php/ext");
 	#endif
 
-	zend_alter_ini_entry("extension_dir", 14, directory, std::strlen(directory), PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
+	zend_alter_ini_entry("extension_dir", 14, directory, strlen(directory), PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 	zend_alter_ini_entry("html_errors", 12, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 	zend_alter_ini_entry("implicit_flush", 15, "1", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 	zend_alter_ini_entry("max_execution_time", 19, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 	zend_alter_ini_entry("variables_order", 16, "S", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
+	zend_alter_ini_entry("error_reporting", 15, "32767", 6, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 
 	SG(options) |= SAPI_OPTION_NO_CHDIR;
 	SG(headers_sent) = 1;
@@ -99,7 +100,7 @@ bool samphp::loadGamemode()
 	zend_first_try {
 		char *filename = (char *) gamemode.c_str();
 		char *include_script;
-		spprintf(&include_script, 0, "if(!@include('%s')) { ", filename);
+		spprintf(&include_script, 0, "if(!include('%s')) { ", filename);
 		spprintf(&include_script, 0, "%s echo \"Couldn't find SAMPHP gamemode.\";", include_script);
 		spprintf(&include_script, 0, "%s SendRconCommand(\"exit\"); }", include_script);
 		zend_eval_string(include_script, NULL, filename TSRMLS_CC);

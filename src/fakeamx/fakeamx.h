@@ -15,17 +15,16 @@
 
 #pragma once
 
-#include <sampgdk/bool.h>
-#include <sampgdk/sdk.h>
+#include "../sampgdk/sampgdk.h"
 
-extern "C" AMX *sampgdk_fakeamx_amx(void);
-extern "C" int sampgdk_fakeamx_resize_heap(int cells);
-extern "C" int sampgdk_fakeamx_push(int cells, cell *address);
-extern "C" int sampgdk_fakeamx_push_cell(cell value, cell *address);
-extern "C" int sampgdk_fakeamx_push_float(float value, cell *address);
-extern "C" int sampgdk_fakeamx_push_string(const char *src, int *size, cell *address);
-extern "C" void sampgdk_fakeamx_get_cell(cell address, cell *value);
-extern "C" void sampgdk_fakeamx_get_bool(cell address, bool *value);
-extern "C" void sampgdk_fakeamx_get_float(cell address, float *value);
-extern "C" void sampgdk_fakeamx_get_string(cell address, char *dest, int size);
-extern "C" void sampgdk_fakeamx_pop(cell address);
+PLUGIN_EXTERN_C AMX *sampgdk_fakeamx_amx(void);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_resize_heap(int cells);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push(int cells, cell *address);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push_cell(cell value, cell *address);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push_float(float value, cell *address);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push_string(const char *src, int *size, cell *address);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_cell(cell address, cell *value);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_bool(cell address, bool *value);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_float(cell address, float *value);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_string(cell address, char *dest, int size);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_pop(cell address);

@@ -7,18 +7,18 @@
 #include <sapi/embed/php_embed.h>
 #include "samphp.h"
 
-PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() {
+PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData) {
 	sampgdk::logprintf("  *****************************************************");
-	sampgdk::logprintf("  *       SAMPHP Plugin revision 2.0 Release 1        *");
+	sampgdk::logprintf("  *       SAMPHP Plugin revision " MAJOR "." MINOR "." REVISION "                *");
 	sampgdk::logprintf("  *             ---------------------                 *");
 	sampgdk::logprintf("  * For updates, check out our GitHub repository at : *");
-	sampgdk::logprintf("  *     https ://github.com/Lapayo/SAMPHP             *");
+	sampgdk::logprintf("  *     https ://github.com/crodriguespt/SAMPHP       *");
 	sampgdk::logprintf("  *****************************************************");
-	return sampgdk::Supports() | SUPPORTS_PROCESS_TICK;
+	return sampgdk::Load(ppData);
 }
 
-PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData) {
-	return sampgdk::Load(ppData);
+PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() {
+	return sampgdk::Supports() | SUPPORTS_PROCESS_TICK;
 }
 
 PLUGIN_EXPORT void PLUGIN_CALL Unload() {

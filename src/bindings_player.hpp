@@ -2036,3 +2036,13 @@ PHP_FUNCTION(NetStats_GetIpPort)
     RETVAL_STRING(buffer, buffer_len);
 }
 
+PHP_FUNCTION(CreateExplosionForPlayer) {
+	int playerid, type;
+	float x, y, z, radius;
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ldddld", &playerid, &x, &y, &z, &type, &radius) == FAILURE) {
+		RETURN_BOOL(false);
+	}
+
+	sampgdk_CreateExplosionForPlayer(playerid, x, y, z, type, radius);
+	RETURN_BOOL(true);
+}

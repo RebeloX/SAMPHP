@@ -264,7 +264,7 @@ static zend_function_entry php_samphp_functions[] = {
     PHP_FE(RemovePlayerAttachedObject, NULL)
     PHP_FE(IsPlayerAttachedObjectSlotUsed, NULL)
     PHP_FE(EditAttachedObject, NULL)
-//    PHP_FE(CreateExplosionForPlayer, NULL)
+	PHP_FE(CreateExplosionForPlayer, NULL)
     PHP_FE(SendDeathMessageToPlayer, NULL)
     PHP_FE(NetStats_BytesReceived, NULL)
     PHP_FE(NetStats_BytesSent, NULL)
@@ -421,7 +421,7 @@ zend_module_entry  samphp_module_entry = {
     NULL, /* RINIT */
     NULL, /* RSHUTDOWN */
     NULL, /* MINFO */
-    "1.0", /* version */
+    "2.1", /* version */
     STANDARD_MODULE_PROPERTIES
 };
 

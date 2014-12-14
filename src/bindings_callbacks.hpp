@@ -14,8 +14,8 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeExit()
 	return result;
 }
 
-PLUGIN_EXPORT bool PLUGIN_CALL OnHTTPResponse(int index, int response_code, const char *data) {
-	return samphp::instance->callBool("OnHTTPResponse", "lls", index, response_code, data);
+PLUGIN_EXPORT void PLUGIN_CALL OnHTTPResponse(int index, int response_code, const char *data) {
+	samphp::instance->callBool("OnHTTPResponse", "lls", index, response_code, data);
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerWeaponShot(int playerid, int weaponid, int hittype, int hitid, float fX, float fY, float fZ) {

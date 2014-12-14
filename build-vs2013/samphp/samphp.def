@@ -1,3 +1,5 @@
+LIBRARY "SAMPHP"
+
 EXPORTS
 	Load
 	Unload
