@@ -54,15 +54,14 @@ Event::on('PlayerConnect', function($player)
 Installation
 ===
 Please look here for installation instructions:
-http://forum.sa-mp.com/showthread.php?p=3264355
+http://forum.sa-mp.com/showthread.php?t=547469
 
 Compiling: Linux
 ===
 1. You need: libxml2-dev, gcc, g++ (x86 environment!)
 2. Clone the repository.
 3. Run ./install_libphp5.sh as root, this will install php headers and libphp5.so
-4. Install SAMPGDK (https://github.com/Zeex/sampgdk#linux)
-5. run ./build.sh and copy the created samphp file to your plugins folder
+4. run ./build.sh and copy the created samphp file to your plugins folder
 
 Thanks to
 ===
