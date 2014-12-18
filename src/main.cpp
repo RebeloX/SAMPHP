@@ -8,13 +8,14 @@
 #include "samphp.h"
 
 PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData) {
+	sampgdk::Load(ppData);
 	sampgdk::logprintf("  *****************************************************");
-	sampgdk::logprintf("  *       SAMPHP Plugin revision " MAJOR "." MINOR "." REVISION "                *");
+	sampgdk::logprintf("  *          SAMPHP Plugin revision "MAJOR"."MINOR"."REVISION"             *");
 	sampgdk::logprintf("  *             ---------------------                 *");
 	sampgdk::logprintf("  * For updates, check out our GitHub repository at : *");
 	sampgdk::logprintf("  *     https ://github.com/crodriguespt/SAMPHP       *");
 	sampgdk::logprintf("  *****************************************************");
-	return sampgdk::Load(ppData);
+	return true;
 }
 
 PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() {
@@ -27,5 +28,5 @@ PLUGIN_EXPORT void PLUGIN_CALL Unload() {
 }
 
 PLUGIN_EXPORT void PLUGIN_CALL ProcessTick() {
-  sampgdk::ProcessTick();
+	sampgdk::ProcessTick();
 }

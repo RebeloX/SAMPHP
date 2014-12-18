@@ -114,8 +114,8 @@
  * limitations under the License.
  */
 
-#ifndef SAMPGDK_AMX_H
-#define SAMPGDK_AMX_H
+#ifndef SAMPGDK_SDK_H
+#define SAMPGDK_SDK_H
 
 /* #include <sampgdk/bool.h> */
 /* #include <sampgdk/platform.h> */
@@ -244,7 +244,7 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick();
 
 /** @} */
 
-#endif /* !SAMPGDK_AMX_H */
+#endif /* !SAMPGDK_SDK_H */
 
 /* Copyright (C) 2011-2014 Zeex
  *
@@ -326,6 +326,313 @@ PLUGIN_EXPORT void PLUGIN_CALL ProcessTick();
   SAMPGDK_CALLBACK_EXPORT return_type SAMPGDK_CALLBACK_CALL rest
 
 #endif /* !SAMPGDK_EXPORT_H */
+
+/* Copyright (C) 2011-2014 Zeex
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef SAMPGDK_CORE_H
+#define SAMPGDK_CORE_H
+
+#include <stdarg.h>
+
+/* #include <sampgdk/bool.h> */
+/* #include <sampgdk/export.h> */
+/* #include <sampgdk/sdk.h> */
+
+/**
+ * \defgroup core      Core
+ * \defgroup interop   Interop
+ * \defgroup version   Version
+ * \defgroup sdk       SA-MP SDK
+ * \defgroup natives   SA-MP Natives
+ * \defgroup callbacks SA-MP Callbacks
+ */
+
+/**
+ * \addtogroup core
+ * @{
+ */
+
+/**
+ * \brief Hidden parameter type, do not use this
+ */
+typedef int sampgdk_hidden_t;
+
+/**
+ * \brief Returns supported SDK version
+ *
+ * This function always returns SUPPORTS_VERSION. Its sole purpose is to
+ * make sure that the version of the SDK is compatible with the one that
+ * was used for building the library.
+ *
+ * \code
+ * PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() {
+ *   return sampgdk_Supports() | SUPPORTS_PROCESS_TICK;
+ * }
+ * \endcode
+ *
+ * \returns SUPPORTS_VERSION
+ */
+SAMPGDK_API(unsigned int, sampgdk_Supports(void));
+
+/**
+ * \brief Initializes the library
+ *
+ * Allocates memory for internal data structures and sets everything
+ * up. Also keeps track of currently loaded plugins and registers the
+ * calling plugin for callback handling.
+ *
+ * This function should be called from Load().
+ *
+ * \param ppData pointer to plugin data as passed to Load()
+ *
+ * \returns \c true on success and \c false otherwise
+ *
+ * \see sampgdk_Unload()
+ */
+SAMPGDK_API(bool, sampgdk_Load(void **ppData, sampgdk_hidden_t));
+
+/**
+ * \brief Shuts everything down, opposite of sampgdk_Load()
+ *
+ * This function should be called from Unload().
+ *
+ * \see sampgdk_Load()
+ */
+SAMPGDK_API(void, sampgdk_Unload(sampgdk_hidden_t));
+
+/**
+ * \brief Processes timers created by the calling plugin
+ *
+ * Goes through the list of created timers and, if necessary, fires
+ * them one by one in the order of increasing IDs.
+ *
+ * If timer precision is important it's better to call this function
+ * on every server tick. The plugin's ProcessTick() function might be
+ * a good place for that.
+ */
+SAMPGDK_API(void, sampgdk_ProcessTick(sampgdk_hidden_t));
+
+/**
+ * \brief Prints a message to the server log
+ *
+ * \note The resulting message cannot be longer than 1024 characters.
+ *
+ * \param format printf-style format string
+ * \param ... further arguments to logprintf()
+ *
+ * \see sampgdk_vlogprintf()
+ */
+SAMPGDK_API(void, sampgdk_logprintf(const char *format, ...));
+
+/**
+ * \brief Prints a message to the server log
+ *
+ * This function is identica to sampgdk_logprintf() except it takes
+ * a \c va_list instead of variable arguments.
+ *
+ * \param format printf-style format string
+ * \param args further arguments to logprintf()
+ *
+ * \see sampgdk_logprintf()
+ */
+SAMPGDK_API(void, sampgdk_vlogprintf(const char *format, va_list args));
+
+/** @} */
+
+#define sampgdk_Load(ppData)  sampgdk_Load(ppData, 0)
+#define sampgdk_Unload()      sampgdk_Unload(0)
+#define sampgdk_ProcessTick() sampgdk_ProcessTick(0)
+
+#ifdef __cplusplus
+
+/**
+ * \brief Main namespace
+ */
+namespace sampgdk {
+
+/**
+ * \addtogroup core
+ * @{
+ */
+
+/// \brief C++ wrapper around sampgdk_Supports()
+inline unsigned int Supports() {
+  return sampgdk_Supports();
+}
+
+/// \brief C++ wrapper around sampgdk_Load()
+inline bool Load(void **ppData) {
+  return sampgdk_Load(ppData);
+}
+
+/// \brief C++ wrapper around sampgdk_Unload()
+inline void Unload() {
+  sampgdk_Unload();
+}
+
+/// \brief C++ wrapper around sampgdk_ProcessTick()
+inline void ProcessTick() {
+  sampgdk_ProcessTick();
+}
+
+/// \brief C++ wrapper around sampgdk_logprintf()
+inline void logprintf(const char *format, ...) {
+  va_list args;
+  va_start(args, format);
+  sampgdk_vlogprintf(format, args);
+  va_end(args);
+}
+
+/// \brief C++ wrapper around sampgdk_vlogprintf()
+inline void vlogprintf(const char *format, va_list args) {
+  sampgdk_vlogprintf(format, args);
+}
+
+/** @} */
+
+} // namespace sampgdk
+
+#endif /* __cplusplus */
+
+#endif /* !SAMPGDK_CORE_H */
+
+/* Copyright (C) 2011-2014 Zeex
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef SAMPGDK_TYPES_H
+#define SAMPGDK_TYPES_H
+
+/* #include <sampgdk/export.h> */
+
+/**
+ * \brief Defines the signature of a timer callback function
+ * \ingroup natives
+ *
+ * \param timerid timer ID as returned by SetTimer()
+ * \param param user-supplied data as passed to SetTimer()
+ */
+typedef void (SAMPGDK_CALL *TimerCallback)(int timerid, void *param);
+
+#endif /* !SAMPGDK_TYPES_H */
+
+/* Copyright (C) 2011-2014 Zeex
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef SAMPGDK_VERSION_H
+#define SAMPGDK_VERSION_H
+
+/* #include <sampgdk/export.h> */
+
+/**
+ * \addtogroup version
+ * @{
+ */
+
+/**
+ * \brief Major version
+ */
+#define SAMPGDK_VERSION_MAJOR 4
+
+/**
+ * \brief Minor version
+ */
+#define SAMPGDK_VERSION_MINOR 2
+
+/**
+ * \brief Patch version
+ */
+#define SAMPGDK_VERSION_PATCH 1
+
+/**
+ * \brief Library version number in the form of \c 0xAABBCC00 where
+ * \c AA, \c BB and \c CC are the major, minor and patch numbers
+ */
+#define SAMPGDK_VERSION_ID 67240192
+
+/**
+ * \brief Library version string in the form of \c x.y.z where \c x,
+ * \c y and \c z are the major, minor and patch numbers
+ */
+#define SAMPGDK_VERSION_STRING "4.2.1"
+
+/**
+ * \brief Gets library version number
+ *
+ * \returns version number
+ *
+ * \see SAMPGDK_VERSION_ID
+ * \see sampgdk_GetVersionString()
+ */
+SAMPGDK_API(int, sampgdk_GetVersion(void));
+
+/**
+ * \brief Gets library version string
+ *
+ * \returns version string
+ *
+ * \see SAMPGDK_VERSION_STRING
+ * \see sampgdk_GetVersion()
+ */
+SAMPGDK_API(const char *, sampgdk_GetVersionString(void));
+
+#ifdef __cplusplus
+
+namespace sampgdk {
+
+/// \brief C++ wrapper around sampgdk_GetVersion()
+inline int GetVersion() {
+  return sampgdk_GetVersion();
+}
+
+/// \brief C++ wrapper around sampgdk_GetVersionString()
+inline const char *GetVersionString() {
+  return sampgdk_GetVersionString();
+}
+
+} // namespace sampgdk
+
+#endif /* __cplusplus */
+
+/** @} */
+
+#endif /* !SAMPGDK_VERSION_H */
 
 /* Copyright (C) 2013-2014 Zeex
  *
@@ -573,312 +880,51 @@ inline cell InvokeNativeArray(AMX_NATIVE native, const char *format,
 
 #endif /* !SAMPGDK_INTEROP_H */
 
-/* Copyright (C) 2011-2014 Zeex
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-#ifndef SAMPGDK_CORE_H
-#define SAMPGDK_CORE_H
-
-#include <stdarg.h>
+#ifndef SAMPGDK_A_HTTP_H
+#define SAMPGDK_A_HTTP_H
 
 /* #include <sampgdk/bool.h> */
 /* #include <sampgdk/export.h> */
-/* #include <sampgdk/sdk.h> */
+/* #include <sampgdk/types.h> */
+
+#define HTTP_GET (1)
+#define HTTP_POST (2)
+#define HTTP_HEAD (3)
+#define HTTP_ERROR_BAD_HOST (1)
+#define HTTP_ERROR_NO_SOCKET (2)
+#define HTTP_ERROR_CANT_CONNECT (3)
+#define HTTP_ERROR_CANT_WRITE (4)
+#define HTTP_ERROR_CONTENT_TOO_BIG (5)
+#define HTTP_ERROR_MALFORMED_RESPONSE (6)
+
 
 /**
- * \defgroup core      Core
- * \defgroup interop   Interop
- * \defgroup version   Version
- * \defgroup sdk       SA-MP SDK
- * \defgroup natives   SA-MP Natives
- * \defgroup callbacks SA-MP Callbacks
- */
-
-/**
- * \addtogroup core
- * @{
- */
-
-/**
- * \brief Hidden parameter type, do not use this
- */
-typedef int sampgdk_hidden_t;
-
-/**
- * \brief Returns supported SDK version
- *
- * This function always returns SUPPORTS_VERSION. Its sole purpose is to
- * make sure that the version of the SDK is compatible with the one that
- * was used for building the library.
- *
- * \code
- * PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() {
- *   return sampgdk_Supports() | SUPPORTS_PROCESS_TICK;
- * }
- * \endcode
- *
- * \returns SUPPORTS_VERSION
- */
-SAMPGDK_API(unsigned int, sampgdk_Supports(void));
-
-/**
- * \brief Initializes the library
- *
- * Allocates memory for internal data structures and sets everything
- * up. Also keeps track of currently loaded plugins and registers the
- * calling plugin for callback handling.
- *
- * This function should be called from Load().
- *
- * \param ppData pointer to plugin data as passed to Load()
- *
- * \returns \c true on success and \c false otherwise
- *
- * \see sampgdk_Unload()
- */
-SAMPGDK_API(bool, sampgdk_Load(void **ppData, sampgdk_hidden_t));
-
-/**
- * \brief Shuts everything down, opposite of sampgdk_Load()
- *
- * This function should be called from Unload().
- *
- * \see sampgdk_Load()
- */
-SAMPGDK_API(void, sampgdk_Unload(sampgdk_hidden_t));
-
-/**
- * \brief Processes timers created by the calling plugin
- *
- * Goes through the list of created timers and, if necessary, fires
- * them one by one in the order of increasing IDs.
- *
- * If timer precision is important it's better to call this function
- * on every server tick. The plugin's ProcessTick() function might be
- * a good place for that.
- */
-SAMPGDK_API(void, sampgdk_ProcessTick(sampgdk_hidden_t));
-
-/**
- * \brief Prints a message to the server log
- *
- * \note The resulting message cannot be longer than 1024 characters.
- *
- * \param format printf-style format string
- * \param ... further arguments to logprintf()
- *
- * \see sampgdk_vlogprintf()
- */
-SAMPGDK_API(void, sampgdk_logprintf(const char *format, ...));
-
-/**
- * \brief Prints a message to the server log
- *
- * This function is identica to sampgdk_logprintf() except it takes
- * a \c va_list instead of variable arguments.
- *
- * \param format printf-style format string
- * \param args further arguments to logprintf()
- *
- * \see sampgdk_logprintf()
- */
-SAMPGDK_API(void, sampgdk_vlogprintf(const char *format, va_list args));
-
-/** @} */
-
-#define sampgdk_Load(ppData)  sampgdk_Load(ppData, 0)
-#define sampgdk_Unload()      sampgdk_Unload(0)
-#define sampgdk_ProcessTick() sampgdk_ProcessTick(0)
-
-#ifdef __cplusplus
-
-/**
- * \brief Main namespace
- */
-namespace sampgdk {
-
-/**
- * \addtogroup core
- * @{
- */
-
-/// \brief C++ wrapper around sampgdk_Supports()
-inline unsigned int Supports() {
-  return sampgdk_Supports();
-}
-
-/// \brief C++ wrapper around sampgdk_Load()
-inline bool Load(void **ppData) {
-  return sampgdk_Load(ppData);
-}
-
-/// \brief C++ wrapper around sampgdk_Unload()
-inline void Unload() {
-  sampgdk_Unload();
-}
-
-/// \brief C++ wrapper around sampgdk_ProcessTick()
-inline void ProcessTick() {
-  sampgdk_ProcessTick();
-}
-
-/// \brief C++ wrapper around sampgdk_logprintf()
-inline void logprintf(const char *format, ...) {
-  va_list args;
-  va_start(args, format);
-  sampgdk_vlogprintf(format, args);
-  va_end(args);
-}
-
-/// \brief C++ wrapper around sampgdk_vlogprintf()
-inline void vlogprintf(const char *format, va_list args) {
-  sampgdk_vlogprintf(format, args);
-}
-
-/** @} */
-
-} // namespace sampgdk
-
-#endif /* __cplusplus */
-
-#endif /* !SAMPGDK_CORE_H */
-
-/* Copyright (C) 2011-2014 Zeex
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-#ifndef SAMPGDK_VERSION_H
-#define SAMPGDK_VERSION_H
-
-/* #include <sampgdk/export.h> */
-
-/**
- * \addtogroup version
- * @{
- */
-
-/**
- * \brief Major version
- */
-#define SAMPGDK_VERSION_MAJOR 4
-
-/**
- * \brief Minor version
- */
-#define SAMPGDK_VERSION_MINOR 2
-
-/**
- * \brief Patch version
- */
-#define SAMPGDK_VERSION_PATCH 1
-
-/**
- * \brief Library version number in the form of \c 0xAABBCC00 where
- * \c AA, \c BB and \c CC are the major, minor and patch numbers
- */
-#define SAMPGDK_VERSION_ID 67240192
-
-/**
- * \brief Library version string in the form of \c x.y.z where \c x,
- * \c y and \c z are the major, minor and patch numbers
- */
-#define SAMPGDK_VERSION_STRING "4.2.1"
-
-/**
- * \brief Gets library version number
- *
- * \returns version number
- *
- * \see SAMPGDK_VERSION_ID
- * \see sampgdk_GetVersionString()
- */
-SAMPGDK_API(int, sampgdk_GetVersion(void));
-
-/**
- * \brief Gets library version string
- *
- * \returns version string
- *
- * \see SAMPGDK_VERSION_STRING
- * \see sampgdk_GetVersion()
- */
-SAMPGDK_API(const char *, sampgdk_GetVersionString(void));
-
-#ifdef __cplusplus
-
-namespace sampgdk {
-
-/// \brief C++ wrapper around sampgdk_GetVersion()
-inline int GetVersion() {
-  return sampgdk_GetVersion();
-}
-
-/// \brief C++ wrapper around sampgdk_GetVersionString()
-inline const char *GetVersionString() {
-  return sampgdk_GetVersionString();
-}
-
-} // namespace sampgdk
-
-#endif /* __cplusplus */
-
-/** @} */
-
-#endif /* !SAMPGDK_VERSION_H */
-
-/* Copyright (C) 2011-2014 Zeex
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-#ifndef SAMPGDK_TYPES_H
-#define SAMPGDK_TYPES_H
-
-/* #include <sampgdk/export.h> */
-
-/**
- * \brief Defines the signature of a timer callback function
  * \ingroup natives
- *
- * \param timerid timer ID as returned by SetTimer()
- * \param param user-supplied data as passed to SetTimer()
+ * \see <a href="http://wiki.sa-mp.com/wiki/HTTP">HTTP on SA-MP Wiki</a>
  */
-typedef void (SAMPGDK_CALL *TimerCallback)(int timerid, void *param);
+SAMPGDK_NATIVE(bool, HTTP(int index, int type, const char * url, const char * data));
 
-#endif /* !SAMPGDK_TYPES_H */
+#ifndef DOXYGEN
+#ifdef SAMPGDK_CPP_WRAPPERS
+namespace sampgdk {
+inline bool HTTP(int index, int type, const char * url, const char * data) {
+  return sampgdk_HTTP(index, type, url, data);
+}
+}
+#else /* SAMPGDK_CPP_WRAPPERS */
+#undef  HTTP
+#define HTTP sampgdk_HTTP
+#endif /* !SAMPGDK_CPP_WRAPPERS */
+#endif /* !DOXYGEN */
+
+
+/**
+ * \ingroup callbacks
+ * \see <a href="http://wiki.sa-mp.com/wiki/OnHTTPResponse">OnHTTPResponse on SA-MP Wiki</a>
+ */
+SAMPGDK_CALLBACK(void, OnHTTPResponse(int index, int response_code, const char * data));
+
+#endif /* !SAMPGDK_A_HTTP_H */
 
 #ifndef SAMPGDK_A_PLAYERS_H
 #define SAMPGDK_A_PLAYERS_H
@@ -2587,52 +2633,6 @@ inline bool CreateExplosionForPlayer(int playerid, float X, float Y, float Z, in
 
 #endif /* !SAMPGDK_A_PLAYERS_H */
 
-#ifndef SAMPGDK_A_HTTP_H
-#define SAMPGDK_A_HTTP_H
-
-/* #include <sampgdk/bool.h> */
-/* #include <sampgdk/export.h> */
-/* #include <sampgdk/types.h> */
-
-#define HTTP_GET (1)
-#define HTTP_POST (2)
-#define HTTP_HEAD (3)
-#define HTTP_ERROR_BAD_HOST (1)
-#define HTTP_ERROR_NO_SOCKET (2)
-#define HTTP_ERROR_CANT_CONNECT (3)
-#define HTTP_ERROR_CANT_WRITE (4)
-#define HTTP_ERROR_CONTENT_TOO_BIG (5)
-#define HTTP_ERROR_MALFORMED_RESPONSE (6)
-
-
-/**
- * \ingroup natives
- * \see <a href="http://wiki.sa-mp.com/wiki/HTTP">HTTP on SA-MP Wiki</a>
- */
-SAMPGDK_NATIVE(bool, HTTP(int index, int type, const char * url, const char * data));
-
-#ifndef DOXYGEN
-#ifdef SAMPGDK_CPP_WRAPPERS
-namespace sampgdk {
-inline bool HTTP(int index, int type, const char * url, const char * data) {
-  return sampgdk_HTTP(index, type, url, data);
-}
-}
-#else /* SAMPGDK_CPP_WRAPPERS */
-#undef  HTTP
-#define HTTP sampgdk_HTTP
-#endif /* !SAMPGDK_CPP_WRAPPERS */
-#endif /* !DOXYGEN */
-
-
-/**
- * \ingroup callbacks
- * \see <a href="http://wiki.sa-mp.com/wiki/OnHTTPResponse">OnHTTPResponse on SA-MP Wiki</a>
- */
-SAMPGDK_CALLBACK(void, OnHTTPResponse(int index, int response_code, const char * data));
-
-#endif /* !SAMPGDK_A_HTTP_H */
-
 #ifndef SAMPGDK_A_VEHICLES_H
 #define SAMPGDK_A_VEHICLES_H
 
@@ -3428,10 +3428,10 @@ inline bool SetObjectMaterial(int objectid, int materialindex, int modelid, cons
 inline bool SetPlayerObjectMaterial(int playerid, int objectid, int materialindex, int modelid, const char * txdname, const char * texturename, int materialcolor = 0) {
   return sampgdk_SetPlayerObjectMaterial(playerid, objectid, materialindex, modelid, txdname, texturename, materialcolor);
 }
-inline bool SetObjectMaterialText(int objectid, const char * text, int materialindex = 0, int materialsize = OBJECT_MATERIAL_SIZE_256x128, const char * fontface = "Arial", int fontsize = 24, bool bold = true, int fontcolor = 0xFFFFFFFF, int backcolor = 0, int textalignment = 0) {
+inline bool SetObjectMaterialText(int objectid, const char * text, int materialindex = 0, int materialsize = OBJECT_MATERIAL_SIZE_256x128, const char * fontface = "Arial", int fontsize = 24, bool bold = true, int fontcolor = 0xFFFFFFFFL, int backcolor = 0, int textalignment = 0) {
   return sampgdk_SetObjectMaterialText(objectid, text, materialindex, materialsize, fontface, fontsize, bold, fontcolor, backcolor, textalignment);
 }
-inline bool SetPlayerObjectMaterialText(int playerid, int objectid, const char * text, int materialindex = 0, int materialsize = OBJECT_MATERIAL_SIZE_256x128, const char * fontface = "Arial", int fontsize = 24, bool bold = true, int fontcolor = 0xFFFFFFFF, int backcolor = 0, int textalignment = 0) {
+inline bool SetPlayerObjectMaterialText(int playerid, int objectid, const char * text, int materialindex = 0, int materialsize = OBJECT_MATERIAL_SIZE_256x128, const char * fontface = "Arial", int fontsize = 24, bool bold = true, int fontcolor = 0xFFFFFFFFL, int backcolor = 0, int textalignment = 0) {
   return sampgdk_SetPlayerObjectMaterialText(playerid, objectid, text, materialindex, materialsize, fontface, fontsize, bold, fontcolor, backcolor, textalignment);
 }
 }
@@ -5297,3 +5297,18 @@ SAMPGDK_CALLBACK(bool, OnPlayerWeaponShot(int playerid, int weaponid, int hittyp
 
 #endif /* !SAMPGDK_A_SAMP_H */
 
+
+#ifndef SAMPGDK_FAKEAMX_H
+#define SAMPGDK_FAKEAMX_H
+PLUGIN_EXPORT AMX *sampgdk_fakeamx_amx(void);
+PLUGIN_EXPORT int sampgdk_fakeamx_resize_heap(int cells);
+PLUGIN_EXPORT int sampgdk_fakeamx_push(int cells, cell *address);
+PLUGIN_EXPORT int sampgdk_fakeamx_push_cell(cell value, cell *address);
+PLUGIN_EXPORT int sampgdk_fakeamx_push_float(float value, cell *address);
+PLUGIN_EXPORT int sampgdk_fakeamx_push_string(const char *src, int *size, cell *address);
+PLUGIN_EXPORT void sampgdk_fakeamx_get_cell(cell address, cell *value);
+PLUGIN_EXPORT void sampgdk_fakeamx_get_bool(cell address, bool *value);
+PLUGIN_EXPORT void sampgdk_fakeamx_get_float(cell address, float *value);
+PLUGIN_EXPORT void sampgdk_fakeamx_get_string(cell address, char *dest, int size);
+PLUGIN_EXPORT void sampgdk_fakeamx_pop(cell address);
+#endif /* !SAMPGDK_FAKEAMX_H */

@@ -404,10 +404,14 @@ static zend_function_entry php_samphp_functions[] = {
     { NULL, NULL, NULL }
 };
 
+PHP_INI_BEGIN()
+PHP_INI_ENTRY("kick_delay", "100", PHP_INI_ALL, NULL)
+PHP_INI_END()
+
 PHP_MINIT_FUNCTION(samphp_minit)
 {
 	#include "samphp_consts.hpp"
-	
+	REGISTER_INI_ENTRIES();
     return SUCCESS;
 }
 
@@ -421,7 +425,7 @@ zend_module_entry  samphp_module_entry = {
     NULL, /* RINIT */
     NULL, /* RSHUTDOWN */
     NULL, /* MINFO */
-    "2.1", /* version */
+    "2.0.3", /* version */
     STANDARD_MODULE_PROPERTIES
 };
 

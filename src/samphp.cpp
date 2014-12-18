@@ -13,13 +13,11 @@
 	#define GetCurrentDir getcwd
 #endif
 //-----
-int php_set_ini_entry(char *entry, char *value, int stage)
-{
+int php_set_ini_entry(char *entry, char *value, int stage) {
 	return zend_alter_ini_entry(entry, strlen(entry)+1, value, strlen(value)+1, PHP_INI_USER, stage);
 }
 
 samphp *samphp::instance = NULL;
-
 using sampgdk::logprintf;
 
 samphp::samphp(bool typeError)
@@ -45,7 +43,6 @@ samphp::samphp(bool typeError)
 	zend_alter_ini_entry("implicit_flush", 15, "1", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 	zend_alter_ini_entry("max_execution_time", 19, "0", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 	zend_alter_ini_entry("variables_order", 16, "S", 1, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
-	zend_alter_ini_entry("error_reporting", 15, "32767", 6, PHP_INI_SYSTEM, PHP_INI_STAGE_ACTIVATE);
 
 	SG(options) |= SAPI_OPTION_NO_CHDIR;
 	SG(headers_sent) = 1;
@@ -56,7 +53,6 @@ samphp::samphp(bool typeError)
 	zend_unset_timeout(TSRMLS_C);
 
 	php_set_ini_entry("variables_order", "S", PHP_INI_STAGE_ACTIVATE);
-	php_set_ini_entry("display_errors", "On", PHP_INI_STAGE_ACTIVATE);
 
 	#ifdef ZEND_WIN32
 		php_set_ini_entry("include_path", ".;./php", PHP_INI_SYSTEM);
@@ -303,15 +299,13 @@ void samphp::internal_error(const char *str)
 
 
 
-int samphp_output_handler(const char *str, unsigned int str_length)
-{
-	logprintf(str);
+int samphp_output_handler(const char *str, unsigned int str_length) {
+	sampgdk::logprintf(str);
 	return str_length;
 }
 
-void samphp_error_handler(char *str)
-{
-	logprintf(str);
+void samphp_error_handler(char *str) {
+	sampgdk::logprintf("ERROR: %s", str);
 }
 
 

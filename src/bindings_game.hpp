@@ -420,9 +420,33 @@ PHP_FUNCTION(IsPlayerAdmin)
     RETVAL_BOOL(sampgdk_IsPlayerAdmin(playerid));
 }
 
+//----
+// Timed Kick Functions
+//----
+struct tagTIMEDKICK {
+	int playerid;
+	int type;
+	char *reason;
+};
+
+void SAMPGDK_CALL executeTimedKick(int timerid, void *params) {
+	tagTIMEDKICK *kick = (tagTIMEDKICK*)params;
+	switch (kick->type) {
+	case 0:
+		sampgdk_Kick(kick->playerid);
+		break;
+	case 1:
+		sampgdk_Ban(kick->playerid);
+		break;
+	case 2:
+		sampgdk_BanEx(kick->playerid, kick->reason);
+		break;
+	}
+}
+
 PHP_FUNCTION(Kick)
 {
-    int playerid;
+    int playerid, interval = INI_INT("kick_delay");
     
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
                         "l", &playerid) == FAILURE)
@@ -430,34 +454,47 @@ PHP_FUNCTION(Kick)
         RETURN_NULL();
     }
 
-    sampgdk_Kick(playerid);
+	tagTIMEDKICK kick;
+	kick.playerid = playerid;
+	kick.type = 0;
+
+	sampgdk_SetTimer(interval, false, (TimerCallback)executeTimedKick, (void*)&kick);
 }
 
 PHP_FUNCTION(Ban)
 {
-    int playerid;
+	int playerid, interval = INI_INT("kick_delay");
     
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
                         "l", &playerid) == FAILURE)
     {
         RETURN_NULL();
-    }
+	}
 
-    sampgdk_Ban(playerid);
+	tagTIMEDKICK kick;
+	kick.playerid = playerid;
+	kick.type = 1;
+
+	sampgdk_SetTimer(interval, false, (TimerCallback)executeTimedKick, (void*)&kick);
 }
 
 PHP_FUNCTION(BanEx)
 {
-    int playerid, reason_len;
+	int playerid, reason_len, interval = INI_INT("kick_delay");
     char *reason;
     
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
                         "ls", &playerid, &reason, &reason_len) == FAILURE)
     {
         RETURN_NULL();
-    }
+	}
 
-    sampgdk_BanEx(playerid, reason);
+	tagTIMEDKICK kick;
+	kick.playerid = playerid;
+	kick.type = 2;
+	kick.reason = reason;
+
+	sampgdk_SetTimer(interval, false, (TimerCallback)executeTimedKick, (void*)&kick);
 }
 
 PHP_FUNCTION(SendRconCommand)

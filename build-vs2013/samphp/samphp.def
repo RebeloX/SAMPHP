@@ -1,9 +1,8 @@
 LIBRARY "SAMPHP"
-
 EXPORTS
+	Supports
 	Load
 	Unload
-	Supports
 	ProcessTick
 	OnDialogResponse
 	OnEnterExitModShop

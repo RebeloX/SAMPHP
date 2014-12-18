@@ -1,9 +1,5 @@
 Changelog
 =========
-2014/11/14:
-- Added missing CreateExplosionForPlayer
-- Updated the SAMPGDK version for 4.2.1 Amalgamation.
-
 2014/11/23:
 - BUG FIX #4 - Missing callbacks in the definitions export file.
 - BUG FIX #5 - Missing callbacks OnHTTPResponse(useless, IKR) and OnPlayerWeaponShot
@@ -15,7 +11,6 @@ Changelog
 - Updated the extension directory for php/ext, now every extension should be copied into the ext folder.
 - BUG FIX #2 - Missing INT return when adding player class.
 - BUG FIX #3 - Function Player::setShopName was executing a wrong function
-
 2014/11/18:
 - Updated the PHP Version for 5.6.3
 - Added support for MySQLI and PDO.

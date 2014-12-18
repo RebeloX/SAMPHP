@@ -93,7 +93,8 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>D:\phpsrc\php-5.6.3-src;D:\phpsrc\php-5.6.3-src\Zend;D:\phpsrc\php-5.6.3-src\win32;D:\phpsrc\php-5.6.3-src\TSRM;D:\phpsrc\php-5.6.3-src\sapi;D:\phpsrc\php-5.6.3-src\main;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SAMPHP_EXPORTS;WIN32;_RELEASE;_WINDOWS;_USRDLL;NDEBUG;ZEND_WIN32_FORCE_INLINE;ZEND_DEBUG=0;ZEND_WIN32;PHP_WIN32;_USE_32BIT_TIME_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SAMPHP_EXPORTS;SAMPGDK_STATIC
+;SAMPGDK_AMALGAMATION;WIN32;_RELEASE;_WINDOWS;_USRDLL;NDEBUG;ZEND_WIN32_FORCE_INLINE;ZEND_DEBUG=0;ZEND_WIN32;PHP_WIN32;_USE_32BIT_TIME_T;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
@@ -139,7 +140,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\bindings.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
-    <ClCompile Include="..\..\src\sampgdk\amxplugin.cpp" />
     <ClCompile Include="..\..\src\sampgdk\sampgdk.c" />
     <ClCompile Include="..\..\src\samphp.cpp" />
   </ItemGroup>
@@ -152,7 +152,6 @@
     <ClInclude Include="..\..\src\bindings_samphp.hpp" />
     <ClInclude Include="..\..\src\bindings_util.hpp" />
     <ClInclude Include="..\..\src\bindings_vehicles.hpp" />
-    <ClInclude Include="..\..\src\fakeamx\fakeamx.h" />
     <ClInclude Include="..\..\src\sampgdk\amx\amx.h" />
     <ClInclude Include="..\..\src\sampgdk\amx\sclinux.h" />
     <ClInclude Include="..\..\src\sampgdk\plugincommon.h" />

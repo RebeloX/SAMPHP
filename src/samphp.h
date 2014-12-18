@@ -1,4 +1,3 @@
-#define SAMPGDK_AMALGAMATION
 #pragma once
 
 #pragma warning(disable: 4244)
@@ -7,7 +6,6 @@
 
 #include <vector>
 #include "sampgdk/sampgdk.h"
-#include "fakeamx/fakeamx.h"
 
 
 #define SUCCESS			0

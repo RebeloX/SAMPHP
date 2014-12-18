@@ -33,9 +33,6 @@
     <ClCompile Include="..\..\src\samphp.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sampgdk\amxplugin.cpp">
-      <Filter>Source files\sampgdk</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\sampgdk\sampgdk.c">
       <Filter>Source files\sampgdk</Filter>
     </ClCompile>
@@ -85,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\sampgdk\amx\sclinux.h">
       <Filter>Header files\sampgdk\amx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\fakeamx\fakeamx.h">
-      <Filter>Header files\sampgdk</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
