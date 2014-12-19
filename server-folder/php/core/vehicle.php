@@ -177,12 +177,12 @@ class Vehicle
 
 	public function attachTrailer($trailer)
 	{
-		return AttachTrailerToVehicle($this->id, Vehicle::find($trailer)->id);
+		return AttachTrailerToVehicle(Vehicle::find($trailer)->id, $this->id);
 	}
 
 	public function detachTrailer()
 	{
-		return GetVehicleHealth($this->id);
+		return DetachTrailerFromVehicle($this->id);
 	}
 
 	public function isTrailerAttached($trailer = null)
