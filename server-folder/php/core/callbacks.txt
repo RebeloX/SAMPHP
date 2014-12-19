@@ -35,6 +35,7 @@ OnPlayerStateChange
 OnPlayerStreamIn
 OnPlayerStreamOut
 OnPlayerTakeDamage
+OnPlayerWeaponShot
 OnPlayerTeamPrivmsg
 OnPlayerText
 OnPlayerUpdate
