@@ -68,6 +68,12 @@ samphp::~samphp()
 
 void samphp::unload()
 {
+	/// Kills every timer before unloading the script(avoids server crash on GMX)
+	for (std::vector<tagTIMERS>::iterator it = samphp::instance->timers.begin();
+		it != samphp::instance->timers.end(); ++it) {
+		sampgdk_KillTimer(it->id);
+	}
+
 	delete samphp::instance;
 	samphp::instance = NULL;
 }
@@ -297,7 +303,21 @@ void samphp::internal_error(const char *str)
 	samphp_error_handler((char*) str);
 }
 
+void samphp::HandlePlayer(bool join, int playerid) {
 
+	if (join) {
+		this->ConnectedPlayers.push_back(playerid);
+		return;
+	}
+
+	for (std::vector<int>::iterator it = this->ConnectedPlayers.begin(); it != this->ConnectedPlayers.end(); ++it) {
+		if (*it == playerid) {
+			this->ConnectedPlayers.erase(it);
+			break;
+		}
+	}
+
+}
 
 int samphp_output_handler(const char *str, unsigned int str_length) {
 	sampgdk::logprintf(str);

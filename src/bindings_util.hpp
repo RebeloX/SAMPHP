@@ -103,11 +103,21 @@ struct TimerParams {
 static void SAMPGDK_CALL executeTimedCallback(int timerId, void *voidParams)
 {
 	TimerParams *params = (TimerParams *) voidParams;
-	zval retval;
-    zval* callbackParams[] = { NULL };
+	zval retval, *argument;
+	MAKE_STD_ZVAL(argument);
+	ZVAL_LONG(argument, timerId);
 
-	call_user_function(CG(function_table), NULL, params->callable, &retval, 0, callbackParams TSRMLS_CC);
-	
+	zval *callbackParams[] = { argument };
+	call_user_function(CG(function_table), NULL, params->callable, &retval, 1, callbackParams TSRMLS_CC);	
+
+	//---- Delete the timer if it's a non-repeat timer.
+	for (std::vector<tagTIMERS>::iterator it = samphp::instance->timers.begin();
+		it != samphp::instance->timers.end(); ++it) {
+		if (it->id == timerId && it->repeating == false) {
+			samphp::instance->timers.erase(it);
+			break;
+		}
+	}
 }
 
 PHP_FUNCTION(SetTimer)
@@ -126,10 +136,15 @@ PHP_FUNCTION(SetTimer)
 
     Z_ADDREF_P(callable);
     params->callable = callable;
-    
 	
 	int ret = sampgdk_SetTimer(interval, repeating, executeTimedCallback, (void*) params);
 	
+	// We need to keep a track of timers running in the PHP script, so when calling GMX, the server doesn't crash.
+	tagTIMERS timer;
+	timer.id = ret;
+	timer.repeating = repeating;
+	samphp::instance->timers.push_back(timer);
+
     RETVAL_LONG(ret);
 }
 
@@ -142,6 +157,14 @@ PHP_FUNCTION(KillTimer)
 	{
         RETURN_NULL();
     }
+
+	for (std::vector<tagTIMERS>::iterator it = samphp::instance->timers.begin();
+		it != samphp::instance->timers.end(); ++it) {
+		if (it->id == timerId) {
+			samphp::instance->timers.erase(it);
+			break;
+		}
+	}
 
     sampgdk_KillTimer(timerId);
 }
@@ -156,4 +179,20 @@ PHP_FUNCTION(GetTickCount)
 PHP_FUNCTION(GetMaxPlayers)
 {
     RETVAL_LONG(sampgdk_GetMaxPlayers());
+}
+
+PHP_FUNCTION(RetrieveConnectedPlayerCount) {
+	RETVAL_LONG(samphp::instance->ConnectedPlayers.size());
+}
+
+PHP_FUNCTION(RetrieveConnectedPlayerList) {
+	if (samphp::instance->ConnectedPlayers.size() == 0)
+		RETURN_NULL();
+
+	array_init(return_value);
+	for (std::vector<int>::iterator it = samphp::instance->ConnectedPlayers.begin();
+		it != samphp::instance->ConnectedPlayers.end(); ++it) {
+		add_next_index_long(return_value, *it);
+	}
+
 }
