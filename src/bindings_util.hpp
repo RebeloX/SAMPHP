@@ -197,13 +197,14 @@ PHP_FUNCTION(RetrieveConnectedPlayerList) {
 
 }
 
+/* To be added later
 PHP_FUNCTION(KillAllTimers) {
 	for (std::vector<tagTIMERS>::iterator it = samphp::instance->timers.begin();
 		it != samphp::instance->timers.end(); ++it) {
 		sampgdk_KillTimer(it->id); // Kills the timer
 		samphp::instance->timers.erase(it); // Remove it from the vector.
 	}
-}
+}*/
 
 PHP_FUNCTION(CountActiveTimers) {
 	RETVAL_LONG(samphp::instance->timers.size());
