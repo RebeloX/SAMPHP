@@ -189,6 +189,11 @@ function OnPlayerTakeDamage($playerid, $issuerid, $amount, $weaponid)
 	return Event::fireDefault("PlayerTakeDamage", true, Player::find($playerid, true), Player::find($issuerid, true), $amount, $weaponid);
 }
 
+function OnPlayerWeaponShot($playerid, $weaponid, $hittype, $hitid, $fX, $fY, $fZ)
+{
+	return Event::fireDefault("PlayerWeaponShot", true, Player::find($playerid, true), $weaponid, $hittype, $hitid, $fX, $fY, $fZ);
+}
+
 function OnPlayerTeamPrivmsg($playerid, $text)
 {
 	return Event::fireDefault("PlayerTeamPrivmsg", true, Player::find($playerid, true), $text);
@@ -215,7 +220,7 @@ function OnRconLoginAttempt($ip, $playerid, $success)
 }
 
 function OnUnoccupiedVehicleUpdate($vehicleid, $playerid, $passenger_seat, $newx, $newy, $newz, $velx, $vely, $velz) {
-	return Event::fireDefault("OnUnoccupiedVehicleUpdate", Vehicle::find($vehicleid), Player::find($playerid, true), $passenger_seat, $newx, $newy, $newz, $velx, $vely, $velz);
+	return Event::fireDefault("UnoccupiedVehicleUpdate", Vehicle::find($vehicleid), Player::find($playerid, true), $passenger_seat, $newx, $newy, $newz, $velx, $vely, $velz);
 }
 
 function OnVehicleDamageStatusUpdate($vehicleid, $playerid)
@@ -245,12 +250,12 @@ function OnVehicleRespray($playerid, $vehicleid, $color1, $color2)
 
 function OnVehicleSpawn($vehicleid)
 {
-	return Event::fireDefault("OnVehicleSpawn", true, Vehicle::find($vehicleid));
+	return Event::fireDefault("VehicleSpawn", true, Vehicle::find($vehicleid));
 }
 
 function OnVehicleStreamIn($vehicleid, $forplayerid)
 {
-	return Event::fireDefault("OnVehicleStreamIn", true, Vehicle::find($vehicleid), Player::find($forplayerid, true));
+	return Event::fireDefault("VehicleStreamIn", true, Vehicle::find($vehicleid), Player::find($forplayerid, true));
 }
 
 function OnVehicleStreamOut($vehicleid, $forplayerid)
