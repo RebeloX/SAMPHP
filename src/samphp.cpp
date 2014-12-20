@@ -73,7 +73,8 @@ void samphp::unload()
 		it != samphp::instance->timers.end(); ++it) {
 		sampgdk_KillTimer(it->id);
 	}
-
+	samphp::instance->timers.clear(); // Delete every timer entry in our vector
+	
 	delete samphp::instance;
 	samphp::instance = NULL;
 }

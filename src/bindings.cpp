@@ -25,10 +25,10 @@ static zend_function_entry php_samphp_functions[] = {
 	PHP_FE(GetAMXNativesList, NULL)
 	PHP_FE(samphpversion, NULL)
 	PHP_FE(sampgdkversion, NULL)
-	PHP_FE(RetrieveConnectedPlayerCount, NULL)
-	PHP_FE(RetrieveConnectedPlayerList, NULL)
-	//PHP_FE(KillAllTimers, NULL) // To be added later
-	PHP_FE(CountActiveTimers, NULL)
+	PHP_FE(GetPlayerCount, NULL)
+	PHP_FE(GetPlayerList, NULL)
+	PHP_FE(KillAllTimers, NULL)
+	PHP_FE(GetTimersCount, NULL)
 
     PHP_FE(SetGameModeText, NULL)
     PHP_FE(SendClientMessage, NULL)

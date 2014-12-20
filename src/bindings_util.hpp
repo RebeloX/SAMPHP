@@ -181,11 +181,11 @@ PHP_FUNCTION(GetMaxPlayers)
     RETVAL_LONG(sampgdk_GetMaxPlayers());
 }
 
-PHP_FUNCTION(RetrieveConnectedPlayerCount) {
+PHP_FUNCTION(GetPlayerCount) {
 	RETVAL_LONG(samphp::instance->ConnectedPlayers.size());
 }
 
-PHP_FUNCTION(RetrieveConnectedPlayerList) {
+PHP_FUNCTION(GetPlayerList) {
 	if (samphp::instance->ConnectedPlayers.size() == 0)
 		RETURN_NULL();
 
@@ -197,15 +197,13 @@ PHP_FUNCTION(RetrieveConnectedPlayerList) {
 
 }
 
-/* To be added later
 PHP_FUNCTION(KillAllTimers) {
 	for (std::vector<tagTIMERS>::iterator it = samphp::instance->timers.begin();
-		it != samphp::instance->timers.end(); ++it) {
+		it != samphp::instance->timers.end(); ++it)
 		sampgdk_KillTimer(it->id); // Kills the timer
-		samphp::instance->timers.erase(it); // Remove it from the vector.
-	}
-}*/
+	samphp::instance->timers.clear();
+}
 
-PHP_FUNCTION(CountActiveTimers) {
+PHP_FUNCTION(GetTimersCount) {
 	RETVAL_LONG(samphp::instance->timers.size());
 }
