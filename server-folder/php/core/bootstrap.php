@@ -37,3 +37,4 @@ require_once 'playerobject.php';
 require_once 'object.php';
 require_once 'playertextdraw.php';
 require_once 'textdraw.php';
+require_once 'timer.php';
