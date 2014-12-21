@@ -24,11 +24,13 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerWeaponShot(int playerid, int weaponid, in
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerConnect(int playerid)
 {
+	samphp::instance->HandlePlayer(true, playerid);
 	return samphp::instance->callBool("OnPlayerConnect", "l", playerid);
 }
 
 PLUGIN_EXPORT bool PLUGIN_CALL OnPlayerDisconnect(int playerid, int reason)
 {
+	samphp::instance->HandlePlayer(false, playerid);
 	return samphp::instance->callBool("OnPlayerDisconnect", "ll", playerid, reason);
 }
 

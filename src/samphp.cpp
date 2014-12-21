@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "sampgdk/plugincommon.h"
+#include "sampgdk/amx/amx.h"
 //-----
 #ifdef WINDOWS
 	#include <direct.h>

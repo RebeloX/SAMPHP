@@ -188,7 +188,7 @@ PHP_FUNCTION(AMXNativeExists) {
 	char* function_name;
 	int function_lenght;
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &function_name, &function_lenght) != SUCCESS) {
-		WRONG_PARAM_COUNT;
+		RETURN_NULL();
 	}
 	RETURN_BOOL(sampgdk::FindNative(function_name) != NULL);
 }
