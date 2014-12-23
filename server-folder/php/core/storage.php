@@ -18,8 +18,4 @@ trait Storage
 	{
 		return isset($this->__data[$key]);
 	}
-
-	public function __unset($key) {
-		return unset($this->__data[$key]);
-	}
 }
