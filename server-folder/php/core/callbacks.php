@@ -86,7 +86,7 @@ function OnPlayerEnterCheckpoint($playerid)
 
 function OnPlayerEnterRaceCheckpoint($playerid)
 {
-	return Event::fireDefault("PlayerEnterCheckpoint", true, Player::find($playerid, true));
+	return Event::fireDefault("PlayerEnterRaceCheckpoint", true, Player::find($playerid, true));
 }
 
 function OnPlayerEnterVehicle($playerid, $vehicleid, $passenger)
