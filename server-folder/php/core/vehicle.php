@@ -2,7 +2,7 @@
 
 class Vehicle
 {
-	use ModelEvent;
+	use ModelEvent, Storage;
 
 	protected static $instances = array();
 

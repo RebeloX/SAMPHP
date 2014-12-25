@@ -1,19 +1,23 @@
 #pragma once
-
 #pragma warning(disable: 4244)
 #pragma warning(disable: 4800)
 #pragma warning(disable: 4355)
-
+//-------
 #include <vector>
 #include "sampgdk/sampgdk.h"
-
-
+//-------
 #define SUCCESS			0
 #define FAIL			1
-#define SAMPHPVERSION	"2.0.3"
+#define SAMPHPVERSION	"2.0.4"
 #define MAJOR			"2"
 #define MINOR			"0"
-#define REVISION		"3"
+#define REVISION		"4"
+//-------
+struct tagTIMERS {
+	int id;
+	bool repeating;
+};
+//-------
 
 typedef unsigned int php_ret;
 //----
@@ -27,6 +31,8 @@ public:
     static samphp* init();
     static void unload();
 	
+	std::vector<tagTIMERS> timers;
+	std::vector<int> ConnectedPlayers;
 	//START taken from facebook/phpembed. Take a look at their license: https://github.com/facebook/phpembed/blob/master/LICENSE
 	bool callBool(char *fn, char *argspec = "", ...);
 	zval *call(char *fn, char *argspec, va_list ap TSRMLS_DC);
@@ -37,6 +43,9 @@ public:
 	static void internal_error(const char *str);
 
     bool loadGamemode();
+	//---- 
+	void HandlePlayer(bool join, int playerid);
+
 
 	php_ret status;
 

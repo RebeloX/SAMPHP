@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\bindings.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\sampgdk\amxplugin.cpp" />
     <ClCompile Include="..\..\src\sampgdk\sampgdk.c" />
     <ClCompile Include="..\..\src\samphp.cpp" />
   </ItemGroup>
