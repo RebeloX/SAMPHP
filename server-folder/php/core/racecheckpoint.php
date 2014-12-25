@@ -23,7 +23,7 @@ class RaceCheckpoint
 	{
 		SetPlayerRaceCheckpoint($player->id, $type, $x, $y, $z, $nextx, $nexty, $nextz, $size);
 
-		return static::$instances[$player->id] = new static($player, $x, $y, $z, $nextx, $nexty, $nextz, $size, $onEnter, $onLeave);
+		return static::$instances[$player->id] = new static($player, $type, $x, $y, $z, $nextx, $nexty, $nextz, $size, $onEnter, $onLeave);
 	}
 
 	public static function destroyForPlayer($player)
