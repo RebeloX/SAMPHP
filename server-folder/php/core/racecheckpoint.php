@@ -99,14 +99,15 @@ class RaceCheckpoint
 		throw new Exception("Event: $name not found on RaceCheckpoint class!");
 	}
 
-	public function setPos($x, $y, $z, $nextx = null, $nexty = null, $nextz = null, $size = null)
+	public function setPos($x, $y, $z, $nextx = null, $nexty = null, $nextz = null, $type = null, $size = null)
 	{
+		if(!isset($type)) $type = $this->type;
 		if(!isset($size)) $size = $this->size;
 		if(!isset($nextx)) $nextx = $this->nextx;
 		if(!isset($nexty)) $nexty = $this->nexty;
 		if(!isset($nextz)) $nextz = $this->nextz;
 
-		SetPlayerRaceCheckpoint($this->player->id, $this->type, $x, $y, $z, $nextx, $nexty, $nextz, $size);
+		SetPlayerRaceCheckpoint($this->player->id, $type, $x, $y, $z, $nextx, $nexty, $nextz, $size);
 	}
 }
 
