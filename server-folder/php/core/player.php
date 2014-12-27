@@ -211,6 +211,12 @@ class Player
 	{
 		return GetPlayerMoney($this->id);
 	}
+	
+	public function setMoney($amount)
+	{
+		GivePlayerMoney($this->id, -(GetPlayerMoney($this->id)));
+		return GivePlayerMoney($this->id, $amount);
+	}
 
 	public function giveMoney($amount)
 	{
