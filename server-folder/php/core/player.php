@@ -1,9 +1,10 @@
 <?php
 require 'playercamera.php';
+require 'playerevent.php';
 
 class Player
 {
-	use ModelEvent, Storage;
+	use Storage;
 
 	protected static $instances = array();
 
@@ -680,36 +681,3 @@ class Player
 }
 
 Event::after('PlayerDisconnect', array('Player', 'handleDisconnect'));
-
-$callbackNames = array();
-
-foreach($callbackList as $callback)
-{
-	$prefix = "OnPlayer";
-	$prefix_len = strlen($prefix);
-
-	if(substr($callback, 0, $prefix_len) == $prefix)
-	{
-		$callbackNames[$callback] = substr($callback, $prefix_len);
-	}
-}
-
-foreach($callbackNames as $extern => $intern)
-{
-	Event::on($extern, function($player) use($intern) {
-		$args = func_get_args();
-		array_unshift($args, $intern);
-				
-		call_user_func_array(array($player, 'fire'), $args);
-	});
-}
-
-
-
-
-/*
-Usage:
-Player::find(123)->on('Spawn', function($player) {
-	$player->kick();
-});
-*/
