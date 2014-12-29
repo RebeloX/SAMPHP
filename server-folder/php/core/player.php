@@ -4,7 +4,7 @@ require 'playerevent.php';
 
 class Player
 {
-	use Storage;
+	use Storage, ModelEvent;
 
 	protected static $instances = array();
 
@@ -681,3 +681,28 @@ class Player
 }
 
 Event::after('PlayerDisconnect', array('Player', 'handleDisconnect'));
+
+// Player Events are now processed with PlayerEvent class.
+// Until the release of SAMPHP 2.1, Both ways will work in the meanwhile.
+$callbackNames = array();
+
+foreach($callbackList as $callback)
+{
+	$prefix = "OnPlayer";
+	$prefix_len = strlen($prefix);
+
+	if(substr($callback, 0, $prefix_len) == $prefix)
+	{
+		$callbackNames[$callback] = substr($callback, $prefix_len);
+	}
+}
+
+foreach($callbackNames as $extern => $intern)
+{
+	Event::on($extern, function($player) use($intern) {
+		$args = func_get_args();
+		array_unshift($args, $intern);
+				
+		call_user_func_array(array($player, 'fire'), $args);
+	});
+}
