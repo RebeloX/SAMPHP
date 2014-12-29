@@ -34,7 +34,15 @@ class PlayerEvent {
 	public function destroy() {
 		unset(static::$instances[$this->player->id][$this->event][$this->id]);
 	}
+	
+	public static function destroyAllForPlayer($player) {
+		if (isset(static::$instances[$player->id])) {
+			unset (static::$instances[$player->id]);
+		}
+	}
 }
+
+Event::after('PlayerDisconnect', array('PlayerEvent', 'destroyAllForPlayer'));
 
 foreach($callbackList as $callback) {
 	$prefix = "OnPlayer";
