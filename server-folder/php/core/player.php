@@ -4,7 +4,7 @@ require 'playerevent.php';
 
 class Player
 {
-	use Storage, ModelEvent;
+	use Storage;
 
 	protected static $instances = array();
 
@@ -38,14 +38,39 @@ class Player
 		$this->camera = PlayerCamera::findForPlayer($this);
 	}
 
+	public function on($event, $callback) {
+		return PlayerEvent::create($this, $event, $callback);
+	}
+	
+	public function fire($event /*, ... */) {
+		if (($events = PlayerEvent::find($this, $event))) {
+			$args = func_get_args();
+			foreach ($events as $callback) {
+				call_user_func_array(array($callback, 'fire'), $args);
+			}
+		}
+	}
+	
+	public function cancel($event) {
+		if (($events = PlayerEvent::find($this, $event))) {
+			foreach ($events as $callback) {
+				call_user_func(array($callback, 'destroy'), null);
+			}
+		}
+	}
+	
+	public function cancelAll() {
+		PlayerEvent::destroyAllForPlayer($this);
+	}
+
 	public function setSpawnInfo($team, $skin, $x, $y, $z, $rotation = 0.0, $weapon1 = 0, $weapon1_ammo = 0, $weapon2 = 0, $weapon2_ammo = 0, $weapon3 = 0, $weapon3_ammo = 0)
 	{
-		SetSpawnInfo($this->id, $team, $skin, $x, $y, $z, $rotation, $weapon1, $weapon1_ammo, $weapon2, $weapon2_ammo, $weapon3, $weapon3_ammo);
+		return SetSpawnInfo($this->id, $team, $skin, $x, $y, $z, $rotation, $weapon1, $weapon1_ammo, $weapon2, $weapon2_ammo, $weapon3, $weapon3_ammo);
 	}
 
 	public function spawn()
 	{
-		SpawnPlayer($this->id);
+		return SpawnPlayer($this->id);
 	}
 
 	public function setPos($x, $y, $z)
@@ -681,28 +706,3 @@ class Player
 }
 
 Event::after('PlayerDisconnect', array('Player', 'handleDisconnect'));
-
-// Player Events are now processed with PlayerEvent class.
-// Until the release of SAMPHP 2.1, Both ways will work in the meanwhile.
-$callbackNames = array();
-
-foreach($callbackList as $callback)
-{
-	$prefix = "OnPlayer";
-	$prefix_len = strlen($prefix);
-
-	if(substr($callback, 0, $prefix_len) == $prefix)
-	{
-		$callbackNames[$callback] = substr($callback, $prefix_len);
-	}
-}
-
-foreach($callbackNames as $extern => $intern)
-{
-	Event::on($extern, function($player) use($intern) {
-		$args = func_get_args();
-		array_unshift($args, $intern);
-				
-		call_user_func_array(array($player, 'fire'), $args);
-	});
-}
