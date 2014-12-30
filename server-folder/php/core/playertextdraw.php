@@ -15,7 +15,7 @@ class PlayerTextDraw
 		if(isset(static::$instances[$player->id][$textId]))
 			return static::$instances[$player->id][$textId];
 
-		return static::$instances[$player->id][$textId] = new static($player->id, $textId);
+		return INVALID_TEXT_DRAW;
 	}
 
 	public static function create($player, $x, $y, $text)
