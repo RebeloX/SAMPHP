@@ -234,3 +234,4 @@ server-folder/gamemodes/*
 server-folder/crashinfo.txt
 server-folder/libmysql.dll
 server-folder/libphp5.so
+server-folder/php/kanti_/
