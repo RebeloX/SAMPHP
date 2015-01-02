@@ -18,9 +18,9 @@ class PlayerText3D
 	}
 
 	public static function create($player, $text, $color, $x, $y, $z, $drawDistance = 100.0,
-		$attachedplayer = INVALID_PLAYER_ID, $attachedvehicle = INVALID_VEHICLE_ID, $virtualworld = 0, $testLOS = false)
+		$attachedplayer = INVALID_PLAYER_ID, $attachedvehicle = INVALID_VEHICLE_ID, $testLOS = false)
 	{
-		$id = CreatePlayer3DTextLabel($player->id, $text, $color, $x, $y, $z, $drawDistance, $attachedplayer, $attachedvehicle, $virtualworld, $testLOS);
+		$id = CreatePlayer3DTextLabel($player->id, $text, $color, $x, $y, $z, $drawDistance, $attachedplayer, $attachedvehicle, $testLOS);
         if(!isset(static::$instances[$player->id])){
             static::$instances[$player->id] = array();
         }
