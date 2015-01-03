@@ -698,7 +698,7 @@ class Player
 
 	public static function handleConnect($id)
 	{
-		return $static::$instances[$id] = new static($id);
+		return static::$instances[$id] = new static($id);
 	}
 
 	public static function handleDisconnect($player)
