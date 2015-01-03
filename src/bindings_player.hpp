@@ -755,8 +755,7 @@ PHP_FUNCTION(GetPlayerVelocity)
     float x, y, z;
     
     if(zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC,
-                        "lddd", &playerid) == FAILURE)
-    {
+                        "l", &playerid) == FAILURE) {
         RETURN_NULL();
     }
 
