@@ -22,11 +22,8 @@ class CMD
 		if(!isset(static::$commands[$command])) return false;
 
 		array_shift($splittedParams);
-		
-		array_unshift($splittedParams, $player);
-
-		call_user_func_array(static::$commands[$command], $splittedParams);
-
+        
+		call_user_func(static::$commands[$command], $player, $splittedParams);
 		return true;
 	}
 }

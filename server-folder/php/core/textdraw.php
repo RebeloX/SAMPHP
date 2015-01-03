@@ -12,7 +12,7 @@ class TextDraw
 		if(isset(static::$instances[$id]))
 			return static::$instances[$id];
 
-		return static::$instances[$id] = new static($id);
+		return INVALID_TEXT_DRAW;
 	}
 
 	public static function create($x, $y, $text)
