@@ -41,7 +41,6 @@ OnPlayerText
 OnPlayerUpdate
 OnRconCommand
 OnRconLoginAttempt
-OnUnoccupiedVehicleUpdate
 OnVehicleDamageStatusUpdate
 OnVehicleDeath
 OnVehicleMod

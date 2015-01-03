@@ -10,6 +10,7 @@ class Player
 
 	public $id;
 
+    /** @var PlayerCamera  */
 	public $camera = null;
 
 	public static function find($id)
