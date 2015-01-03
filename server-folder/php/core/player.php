@@ -20,10 +20,7 @@ class Player
 		if(isset(static::$instances[$id]))
 			return static::$instances[$id];
 
-		if($id >= INVALID_PLAYER_ID)
-			return null;
-
-		return static::$instances[$id] = new static($id);
+		return null;
 	}
 
 	public static function all()
@@ -240,7 +237,7 @@ class Player
 	
 	public function setMoney($amount)
 	{
-		GivePlayerMoney($this->id, -(GetPlayerMoney($this->id)));
+		ResetPlayerMoney($this->id);
 		return GivePlayerMoney($this->id, $amount);
 	}
 
@@ -696,6 +693,11 @@ class Player
 	public function enableStuntBonus($enable = true)
 	{
 		return EnableStuntBonusForPlayer($this->id, $enable);
+	}
+
+	public static function handleConnect($id)
+	{
+		return $static::$instances[$id] = new static($id);
 	}
 
 	public static function handleDisconnect($player)
