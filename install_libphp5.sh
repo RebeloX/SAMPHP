@@ -6,7 +6,7 @@ rm -rf $SRCDIR
 
 PHP5="php-5.6.4"
 
-PHPFEATURES="--disable-zts --disable-cli --disable-cgi --enable-embed=shared --with-mhash --without-gd --without-t1lib --without-libvpx --enable-mbstring --enable-mbregex --with-mcrypt --with-pgsql --disable-session --enable-sockets --with-sqlite3 --without-dom --with-mysql --with-mysqli=libmysql --enable-pdo --with-pdo-mysql --with-pdo-sqlite --with-pdo-pgsql --disable-opcache \
+PHPFEATURES="--disable-zts --disable-cli --disable-cgi --enable-embed=shared --with-mhash --without-gd --without-t1lib --without-libvpx --enable-mbstring --enable-mbregex --with-pgsql --disable-session --enable-sockets --with-sqlite3 --without-dom --with-mysql --with-mysqli=libmysql --enable-pdo --with-pdo-mysql --with-pdo-sqlite --with-pdo-pgsql --disable-opcache \
 "
 
 mkdir -p ${SRCDIR}
@@ -19,7 +19,7 @@ cd ${DISTDIR}
 
 if [ ! -f ${DISTDIR}/${PHP5}.tar.gz ] 
 then
-    wget -c http://us.php.net/get/${PHP5}.tar.gz/from/this/mirror/
+    wget -c http://fr.php.net/get/${PHP5}.tar.gz/from/this/mirror/
     mv index.html ${PHP5}.tar.gz
 fi
 
