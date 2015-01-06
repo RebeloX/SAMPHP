@@ -8,17 +8,18 @@
 #include "samphp.h"
 
 PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData) {
-	sampgdk::Load(ppData);
+	return sampgdk::Load(ppData);
+}
+
+PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() {
+	//// The logprintf is here, so if the plugin doesn't load... we don't show the welcome message. :)
 	sampgdk::logprintf("  *****************************************************");
 	sampgdk::logprintf("  *          SAMPHP Plugin revision "MAJOR"."MINOR"."REVISION"             *");
 	sampgdk::logprintf("  *             ---------------------                 *");
 	sampgdk::logprintf("  * For updates, check out our GitHub repository at : *");
 	sampgdk::logprintf("  *     https ://github.com/crodriguespt/SAMPHP       *");
 	sampgdk::logprintf("  *****************************************************");
-	return true;
-}
-
-PLUGIN_EXPORT unsigned int PLUGIN_CALL Supports() {
+	sampgdk::logprintf("  * Released: %s %s", __DATE__, __TIME__);
 	return sampgdk::Supports() | SUPPORTS_PROCESS_TICK;
 }
 

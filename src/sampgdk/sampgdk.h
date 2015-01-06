@@ -5297,18 +5297,17 @@ SAMPGDK_CALLBACK(bool, OnPlayerWeaponShot(int playerid, int weaponid, int hittyp
 
 #endif /* !SAMPGDK_A_SAMP_H */
 
-
 #ifndef SAMPGDK_FAKEAMX_H
 #define SAMPGDK_FAKEAMX_H
-PLUGIN_EXPORT AMX *sampgdk_fakeamx_amx(void);
-PLUGIN_EXPORT int sampgdk_fakeamx_resize_heap(int cells);
-PLUGIN_EXPORT int sampgdk_fakeamx_push(int cells, cell *address);
-PLUGIN_EXPORT int sampgdk_fakeamx_push_cell(cell value, cell *address);
-PLUGIN_EXPORT int sampgdk_fakeamx_push_float(float value, cell *address);
-PLUGIN_EXPORT int sampgdk_fakeamx_push_string(const char *src, int *size, cell *address);
-PLUGIN_EXPORT void sampgdk_fakeamx_get_cell(cell address, cell *value);
-PLUGIN_EXPORT void sampgdk_fakeamx_get_bool(cell address, bool *value);
-PLUGIN_EXPORT void sampgdk_fakeamx_get_float(cell address, float *value);
-PLUGIN_EXPORT void sampgdk_fakeamx_get_string(cell address, char *dest, int size);
-PLUGIN_EXPORT void sampgdk_fakeamx_pop(cell address);
-#endif /* !SAMPGDK_FAKEAMX_H */
+PLUGIN_EXTERN_C AMX *sampgdk_fakeamx_amx(void);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_resize_heap(int cells);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push(int cells, cell *address);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push_cell(cell value, cell *address);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push_float(float value, cell *address);
+PLUGIN_EXTERN_C int sampgdk_fakeamx_push_string(const char *src, int *size, cell *address);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_cell(cell address, cell *value);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_bool(cell address, bool *value);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_float(cell address, float *value);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_get_string(cell address, char *dest, int size);
+PLUGIN_EXTERN_C void sampgdk_fakeamx_pop(cell address);
+#endif

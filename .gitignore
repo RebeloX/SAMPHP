@@ -226,12 +226,3 @@ server-folder/announce*
 server-folder/samp-*
 server-folder/server*
 server-folder/scriptfiles/*
-server-folder/php/.idea/*
-server-folder/php/kanti/*
-server-folder/pawno/*
-server-folder/npcmodes/*
-server-folder/gamemodes/*
-server-folder/crashinfo.txt
-server-folder/libmysql.dll
-server-folder/libphp5.so
-server-folder/php/kanti_/

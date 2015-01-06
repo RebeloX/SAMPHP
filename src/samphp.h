@@ -8,17 +8,16 @@
 //-------
 #define SUCCESS			0
 #define FAIL			1
-#define SAMPHPVERSION	"2.0.4"
+#define SAMPHPVERSION	"2.0.5"
 #define MAJOR			"2"
 #define MINOR			"0"
-#define REVISION		"4"
+#define REVISION		"5"
 //-------
 struct tagTIMERS {
 	int id;
 	bool repeating;
 };
 //-------
-
 typedef unsigned int php_ret;
 //----
 class samphp
@@ -33,6 +32,7 @@ public:
 	
 	std::vector<tagTIMERS> timers;
 	std::vector<int> ConnectedPlayers;
+	bool DEBUG = false;
 	//START taken from facebook/phpembed. Take a look at their license: https://github.com/facebook/phpembed/blob/master/LICENSE
 	bool callBool(char *fn, char *argspec = "", ...);
 	zval *call(char *fn, char *argspec, va_list ap TSRMLS_DC);
@@ -43,9 +43,9 @@ public:
 	static void internal_error(const char *str);
 
     bool loadGamemode();
+	void loadConfig();
 	//---- 
 	void HandlePlayer(bool join, int playerid);
-
 
 	php_ret status;
 

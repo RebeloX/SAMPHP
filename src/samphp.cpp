@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <time.h>
 #include "sampgdk/plugincommon.h"
 #include "sampgdk/amx/amx.h"
 //-----
@@ -70,13 +71,6 @@ samphp::~samphp()
 
 void samphp::unload()
 {
-	/// Kills every timer before unloading the script(avoids server crash on GMX)
-	for (std::vector<tagTIMERS>::iterator it = samphp::instance->timers.begin();
-		it != samphp::instance->timers.end(); ++it) {
-		sampgdk_KillTimer(it->id);
-	}
-	samphp::instance->timers.clear(); // Delete every timer entry in our vector
-	
 	delete samphp::instance;
 	samphp::instance = NULL;
 }
@@ -95,30 +89,38 @@ samphp* samphp::init()
 bool samphp::loadGamemode()
 {
 	std::string gamemode = GetServerCfgOption("samphpmode");
-	
+
 	if(gamemode.length() > 0) {
 		gamemode = "php/" + gamemode + "/gamemode.php";
 	} else {
 		gamemode = "php/gamemode.php";
 	}
 
-	zend_first_try {
-		char *filename = (char *) gamemode.c_str();
+	char *filename = (char *)gamemode.c_str();
+	zend_try{
 		char *include_script;
-		spprintf(&include_script, 0, "if(!include('%s')) { ", filename);
-		spprintf(&include_script, 0, "%s echo \"Couldn't find SAMPHP gamemode.\";", include_script);
-		spprintf(&include_script, 0, "%s SendRconCommand(\"exit\"); }", include_script);
+		spprintf(&include_script, 0, "@require_once('%s');", filename);
 		zend_eval_string(include_script, NULL, filename TSRMLS_CC);
 		efree(include_script);
+	} zend_catch {
+		sampgdk::logprintf("[SAMPHP:error] Couldn't parse entry point file(%s)", filename);
+		SendRconCommand("exit");
+		GameModeExit(); // Stops the executing of the gamemode
+		return false;
 	} zend_end_try();
 
+	this->loadConfig();
 	return true;
 }
 
 bool samphp::callBool(char *fn, char *argspec, ...)
 {
-	bool rrv = false;
+	// DEBUGGING
+	if (this->DEBUG)
+		sampgdk::logprintf("[SAMPHP:debug]Executing callback %s(%d)", fn, strlen(argspec));
+	// END DEBUGGING
 
+	bool rrv = false;
 	zval *rv;
 
 	va_list ap;
@@ -149,6 +151,11 @@ bool samphp::callBool(char *fn, char *argspec, ...)
 		zval_ptr_dtor(&rv);
 	}
 
+
+	// DEBUGGING
+	if (this->DEBUG)
+		sampgdk::logprintf("[SAMPHP:debug] Executed callback %s(%d)", fn, strlen(argspec));
+	// END DEBUGGING
 	return rrv;
 }
 
@@ -320,6 +327,14 @@ void samphp::HandlePlayer(bool join, int playerid) {
 		}
 	}
 
+}
+
+void samphp::loadConfig() {
+	std::string conf = GetServerCfgOption("samphpconf");
+	if (conf.length() > 0) {
+		if (strstr(conf.c_str(), "DEBUG"))
+			this->DEBUG = true;
+	}
 }
 
 int samphp_output_handler(const char *str, unsigned int str_length) {

@@ -220,3 +220,15 @@ PHP_FUNCTION(sampgdkversion) {
 	char* str = estrdup(sampgdk::GetVersionString());
 	RETURN_STRING(str, 0);
 }
+
+PHP_FUNCTION(ToggleDebugging) {
+	if (ZEND_NUM_ARGS() != 1)
+		WRONG_PARAM_COUNT;
+
+	bool toggle;
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "b", &toggle) != SUCCESS)
+		RETURN_NULL();
+
+	samphp::instance->DEBUG = toggle;
+	RETURN_BOOL(toggle);
+}

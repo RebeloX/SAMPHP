@@ -61,21 +61,12 @@ Compiling: Linux
 1. You need: libxml2-dev, gcc, g++ (x86 environment!)
 2. Clone the repository.
 3. Run ./install_libphp5.sh as root, this will install php headers and libphp5.so
-4. run ./build.sh and copy the created samphp file to your plugins folder
-
-Compiling on Windows:
-===
-1. Download visual studio 2013
-2. Clone the repository
-3. Download PHP source code
-4. Build the PHP source code with the parameters given in build-vs2013/php params windows.txt file.
-5. Updated visual studio project properties with the new PHP include directories and library directories.
-6. Clean up the project(If required) and Build it.
-7. Move the created samphp.dll file to your sa-mp server plugin folder(And configure the server to load from it)
+4. Install SAMPGDK (https://github.com/Zeex/sampgdk#linux)
+5. run ./build.sh and copy the created samphp file to your plugins folder
 
 Thanks to
 ===
 - SA:MP Team for developing SA:MP
 - Zeex for developing the SAMPGDK which is used by SAMPHP
 - All the PHP Core developers
-- Lapayo(for creating this wrapper)
+

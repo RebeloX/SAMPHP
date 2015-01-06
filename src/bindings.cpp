@@ -29,6 +29,7 @@ static zend_function_entry php_samphp_functions[] = {
 	PHP_FE(GetPlayerList, NULL)
 	PHP_FE(KillAllTimers, NULL)
 	PHP_FE(GetTimersCount, NULL)
+	PHP_FE(ToggleDebugging, NULL)
 
     PHP_FE(SetGameModeText, NULL)
     PHP_FE(SendClientMessage, NULL)
@@ -421,16 +422,14 @@ PHP_MINIT_FUNCTION(samphp_minit)
 
 
 zend_module_entry  samphp_module_entry = {
-    STANDARD_MODULE_HEADER,
-    "samphp", /* extension name */
-    php_samphp_functions, /* function entries */
-    PHP_MINIT(samphp_minit), /* MINIT */
-    NULL, /* MSHUTDOWN */
-    NULL, /* RINIT */
-    NULL, /* RSHUTDOWN */
-    NULL, /* MINFO */
-    "2.0.3", /* version */
-    STANDARD_MODULE_PROPERTIES
+	STANDARD_MODULE_HEADER,
+	"samphp", /* extension name */
+	php_samphp_functions, /* function entries */
+	PHP_MINIT(samphp_minit), /* MINIT */
+	NULL, /* MSHUTDOWN */
+	NULL, /* RINIT */
+	NULL, /* RSHUTDOWN */
+	NULL, /* MINFO */
+	SAMPHPVERSION, /* version */
+	STANDARD_MODULE_PROPERTIES
 };
-
-

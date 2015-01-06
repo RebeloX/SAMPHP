@@ -8,9 +8,12 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeExit()
 {
 	bool result = samphp::instance->callBool("OnGameModeExit");
+	// Terminates every timer
+	for (auto it = samphp::instance->timers.begin(); it != samphp::instance->timers.end(); ++it)
+		sampgdk_KillTimer(it->id);
+	samphp::instance->timers.clear();
 
 	samphp::unload();
-
 	return result;
 }
 
