@@ -6,7 +6,7 @@ rm -rf $SRCDIR
 
 PHP5="php-5.6.4"
 
-PHPFEATURES="--disable-zts --disable-cli --disable-cgi --enable-embed=shared --with-mhash --without-gd --without-t1lib --without-libvpx --enable-mbstring --enable-mbregex --with-pgsql --disable-session --enable-sockets --with-sqlite3 --without-dom --with-mysql --with-mysqli=libmysql --enable-pdo --with-pdo-mysql --with-pdo-sqlite --with-pdo-pgsql --disable-opcache \
+PHPFEATURES="--disable-all --disable-cli --disable-cgi --enable-embed=shared --disable-zts --with-sqlite3 --enable-pdo --with-pdo-mysql  --with-pdo-sqlite --with-mysqli=libmysql --enable-mbstring \
 "
 
 mkdir -p ${SRCDIR}
